@@ -15,6 +15,15 @@ Run `/repo-atlas` in any project and it will:
 
 The result is a `docs/atlas/` folder with 10 structured docs that any engineer or AI agent can load for instant context.
 
+## Pair With Codex
+
+After generating your atlas, use the [Codex skill](https://github.com/cathrynlavery/codex-skill) to get a second opinion. Codex will independently review your atlas docs for accuracy, gaps, and missed gotchas — giving you an automated quality check powered by OpenAI Codex.
+
+```
+/repo-atlas          # Build the atlas
+/codex Review my atlas docs for accuracy and completeness
+```
+
 ## Supports
 
 **Languages:** Python, JavaScript/TypeScript, Go, Rust, Swift, Java, Kotlin, C/C++, C#, PHP, Elixir, Dart
