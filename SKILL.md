@@ -1,6 +1,6 @@
 ---
 name: repo-atlas
-description: Build a self-contained persistent context system (atlas) for any repository. Use when asked to create a repo map, generate codebase documentation for LLM agents, set up an atlas, or create onboarding docs for a codebase. Also use when asked to "map this repo", "document this codebase", or "create context docs".
+description: "Build a persistent context system (atlas) for any repository — generates directory maps with entrypoints, documents architecture and module boundaries, traces critical flows, catalogs external dependencies, and creates agent-ready onboarding guides. Use when asked to create a repo map, generate codebase documentation for LLM agents, set up an atlas, or create onboarding docs. Also use when asked to 'map this repo', 'document this codebase', or 'create context docs'."
 ---
 
 # Repo Atlas
@@ -21,13 +21,7 @@ Build an in-repo persistent context system so engineers and LLM agents can under
 Before writing anything, understand the repo:
 
 1. Read the top-level directory structure
-2. Identify the repo type:
-   - **App** (web, mobile, desktop) — has screens/views, state managers, routes
-   - **Backend/API** — has controllers, routes, middleware, models
-   - **Library** — has public exports, module structure, build config
-   - **Monorepo** — multiple packages/services
-   - **CLI tool** — has command handlers, argument parsing
-   - **Infrastructure** — has deployment configs, IaC files
+2. Identify the repo type (app, backend/API, library, monorepo, CLI, infrastructure)
 3. Identify the primary language(s) and framework(s)
 4. Find entrypoints, build configs, CI files
 5. Read 5-10 key files to understand architecture patterns
@@ -94,34 +88,11 @@ Each doc should be 50-150 lines with real paths, real code references, and real 
 
 ### Phase 5: Add Agent On-Ramp
 
-Add an atlas section to the repo's `CLAUDE.md` (or create one). Include:
+Add an atlas section to the repo's `CLAUDE.md` (or create one) with:
 
-```markdown
-## Atlas — Persistent Context System
-
-The `docs/atlas/` folder contains structured documentation for fast codebase onboarding.
-
-### Agent Workflow
-
-**Agent A (Plan + Execute)**:
-1. Load `docs/atlas/repo-map.md` for orientation
-2. Load the domain-specific atlas doc for your task
-3. Read source files only after the atlas narrows your search
-4. Implement changes following the patterns in the atlas
-
-**Agent B (Verify)**:
-1. Review diffs against `docs/atlas/06_GOTCHAS.md`
-2. Verify changes match the flow described in `03_CRITICAL_FLOWS.md`
-3. Confirm tests pass per `07_TEST_MATRIX.md`
-4. Check state consistency against `04_STATE_SOURCES_OF_TRUTH.md`
-
-### Working Rules
-- **Analysis first**: Read the relevant atlas docs before writing code
-- **Verify behavior**: After changes, confirm critical flows still work
-- **No test-cheating**: Tests must pass because the code is correct
-- **Update atlas**: If changes alter architecture/flows/state, update the relevant doc
-- **Regenerate**: Run `make atlas-generate` after structural changes
-```
+- A pointer to `docs/atlas/` and its purpose
+- A two-agent workflow: **Agent A** loads `repo-map.md` → domain-specific doc → source files → implements; **Agent B** reviews diffs against `06_GOTCHAS.md`, verifies flows via `03_CRITICAL_FLOWS.md`, and confirms tests per `07_TEST_MATRIX.md`
+- Working rules: read atlas before coding, verify critical flows after changes, update atlas docs when architecture changes, run `make atlas-generate` after structural changes
 
 ### Phase 6: Add Build Targets
 
