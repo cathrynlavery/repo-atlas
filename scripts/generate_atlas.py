@@ -206,7 +206,7 @@ def find_entrypoints() -> list[tuple[str, str]]:
     for path in REPO_ROOT.rglob("*"):
         if not path.is_file() or _is_ignored(path):
             continue
-        rel = str(path.relative_to(REPO_ROOT))
+        rel = path.relative_to(REPO_ROOT).as_posix()
 
         # 1a. Match by filename
         if path.name in ENTRYPOINT_NAMES and rel not in seen_paths:
