@@ -485,7 +485,11 @@ def main():
                 stale.append(f"MISSING: {path.relative_to(REPO_ROOT)}")
                 continue
             existing = path.read_text()
-            if existing != content:
+            
+            def normalize(s):
+                return "\n".join(line for line in s.splitlines() if not line.startswith("*Generated:"))
+
+            if normalize(existing) != normalize(content):
                 stale.append(f"STALE: {path.relative_to(REPO_ROOT)}")
 
         if stale:
