@@ -131,6 +131,11 @@ def _is_ignored(path: Path) -> bool:
     return any(part in IGNORE_NAMES for part in path.relative_to(REPO_ROOT).parts)
 
 
+def _strip_dynamic_content(content: str) -> str:
+    """Strip dynamic generated dates to enable strict equality checks across days."""
+    return "\n".join(line for line in content.splitlines() if not line.startswith("*Generated:"))
+
+
 # ---------------------------------------------------------------------------
 # Directory tree generation
 # ---------------------------------------------------------------------------
@@ -485,11 +490,7 @@ def main():
                 stale.append(f"MISSING: {path.relative_to(REPO_ROOT)}")
                 continue
             existing = path.read_text()
-            
-            def normalize(s):
-                return "\n".join(line for line in s.splitlines() if not line.startswith("*Generated:"))
-
-            if normalize(existing) != normalize(content):
+            if _strip_dynamic_content(existing) != _strip_dynamic_content(content):
                 stale.append(f"STALE: {path.relative_to(REPO_ROOT)}")
 
         if stale:
